@@ -1,28 +1,28 @@
 #!/bin/bash
 
-# Nome do projeto
+# Project name
 PROJECT_NAME=$1
 
-# Verifica se o nome do projeto foi fornecido
+# Check if the project name was provided
 if [ -z "$PROJECT_NAME" ]; then
-  echo "Uso: $(basename "$0") <nome-do-projeto>"
+  echo "Usage: $0 <project-name>"
   exit 1
 fi
 
-# Cria a pasta do projeto e navega até ela
-mkdir "$PROJECT_NAME"
-cd "$PROJECT_NAME" || exit
+# Create the project directory and navigate into it
+mkdir $PROJECT_NAME
+cd $PROJECT_NAME || exit
 
-# Inicializa um projeto Node.js
+# Initialize a Node.js project
 npm init -y
 
-# Instala o Express, dotenv e outros pacotes necessários
+# Install Express, dotenv, and other necessary packages
 npm install express dotenv
 
-# Instala o TypeScript e suas dependências
+# Install TypeScript and its dependencies
 npm install --save-dev typescript @types/node @types/express ts-node-dev
 
-# Cria o arquivo .editorconfig
+# Create the .editorconfig file
 echo "root = true
 
 [*]
@@ -33,7 +33,7 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true" > .editorconfig
 
-# Instala o Prettier e configura
+# Install and configure Prettier
 npm install --save-dev prettier
 echo "{
   \"semi\": false,
@@ -43,11 +43,11 @@ echo "{
   \"printWidth\": 80
 }" > .prettierrc
 
-# Instala o ESLint e configura
+# Install and configure ESLint
 npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
 npx eslint --init
 
-# Cria o arquivo tsconfig.json
+# Create the tsconfig.json file
 echo "{
   \"compilerOptions\": {
     \"target\": \"es6\",
@@ -63,7 +63,7 @@ echo "{
   \"exclude\": [\"node_modules\"]
 }" > tsconfig.json
 
-# Cria a estrutura de pastas e arquivos do projeto
+# Create the project structure and files
 mkdir src
 echo "import express from 'express'
 import dotenv from 'dotenv'
@@ -81,17 +81,19 @@ app.listen(port, () => {
   console.log(\`Server is running on port \${port}\`)
 })" > src/index.ts
 
-# Cria o arquivo .env
+# Create the .env file
 echo "PORT=3000" > .env
 
-# Configura os scripts do package.json
+# Configure the package.json scripts
 npx json -I -f package.json -e 'this.scripts={ "start": "node dist/index.js", "build": "tsc", "dev": "ts-node-dev src/index.ts", "lint": "eslint . --ext .ts" }'
 
-# Inicializa o git e faz o primeiro commit
+# Initialize git and make the first commit
 git init
 echo "node_modules
 dist" > .gitignore
 git add .
 git commit -m "Initial commit"
 
-echo "Projeto Node.js com Express, dotenv, EditorConfig, Prettier, ESLint e TypeScript configurado com sucesso!"
+echo "Node.js project with Express, dotenv, EditorConfig, Prettier, ESLint, and TypeScript successfully configured!"
+
+npm run dev
