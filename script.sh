@@ -5,13 +5,13 @@ PROJECT_NAME=$1
 
 # Verifica se o nome do projeto foi fornecido
 if [ -z "$PROJECT_NAME" ]; then
-  echo "Uso: $0 <nome-do-projeto>"
+  echo "Uso: $(basename "$0") <nome-do-projeto>"
   exit 1
 fi
 
 # Cria a pasta do projeto e navega até ela
-mkdir $PROJECT_NAME
-cd $PROJECT_NAME
+mkdir "$PROJECT_NAME"
+cd "$PROJECT_NAME" || exit
 
 # Inicializa um projeto Node.js
 npm init -y
@@ -22,7 +22,7 @@ npm install express dotenv
 # Instala o TypeScript e suas dependências
 npm install --save-dev typescript @types/node @types/express ts-node-dev
 
-# Instala o EditorConfig
+# Cria o arquivo .editorconfig
 echo "root = true
 
 [*]
@@ -81,6 +81,7 @@ app.listen(port, () => {
   console.log(\`Server is running on port \${port}\`)
 })" > src/index.ts
 
+# Cria o arquivo .env
 echo "PORT=3000" > .env
 
 # Configura os scripts do package.json
@@ -94,4 +95,3 @@ git add .
 git commit -m "Initial commit"
 
 echo "Projeto Node.js com Express, dotenv, EditorConfig, Prettier, ESLint e TypeScript configurado com sucesso!"
-
