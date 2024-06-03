@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Project name
-PROJECT_NAME=$1
+PROJECT_NAME=$0
 
 # Check if the project name was provided
 if [ -z "$PROJECT_NAME" ]; then
